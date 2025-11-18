@@ -3,8 +3,12 @@
 
 #include "TankBattle/Public/BaseTank.h"
 
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "GameplayTagsSettings.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ABaseTank::ABaseTank()
@@ -15,12 +19,29 @@ ABaseTank::ABaseTank()
 	SpringArmComp->TargetArmLength = 600;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
-	CameraComp->SetupAttachment(SpringArmComp); 
+	CameraComp->SetupAttachment(SpringArmComp);
+
+	TankSpeed = 450.f;
 }
 
 void ABaseTank::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
+		{
+			if (UEnhancedInputLocalPlayerSubsystem* Subsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
+			{
+				if (DefaultMappingContext)
+				{
+					Subsystem->AddMappingContext(DefaultMappingContext, 0);
+				}
+			}
+		}
+	}
+
 }
 
 void ABaseTank::Tick(float DeltaTime)
@@ -31,4 +52,27 @@ void ABaseTank::Tick(float DeltaTime)
 void ABaseTank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABaseTank::MoveInput);
+		EIC->BindAction(TurnAction, ETriggerEvent::Triggered, this, &ABaseTank::TurnInput);
+	}
+}
+
+void ABaseTank::MoveInput(const FInputActionValue& MoveValue)
+{
+	float InputValue = MoveValue.Get<float>();
+	FVector DeltaLocation = FVector::ZeroVector;
+	DeltaLocation.X = InputValue * TankSpeed * GetWorld()->GetDeltaSeconds();
+	// DeltaLocation.X = InputValue * 100 * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	AddActorLocalOffset(DeltaLocation,true);
+}
+
+void ABaseTank::TurnInput(const struct FInputActionValue& MoveValue)
+{
+	float InputValue = MoveValue.Get<float>();
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	DeltaRotation.Yaw = InputValue * TankSpeed * GetWorld()->GetDeltaSeconds();
+	AddActorLocalRotation(DeltaRotation,true);
 }
