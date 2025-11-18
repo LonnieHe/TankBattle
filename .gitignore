@@ -79,6 +79,7 @@ DerivedDataCache/*
 
 # Plugins
 Plugins/*
+.idea/*
 
 # Mac OS X
 .DS_Store
