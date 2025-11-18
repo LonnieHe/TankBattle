@@ -42,9 +42,12 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class UCameraComponent> CameraComp;
 
-	UPROPERTY(VisibleAnywhere, Category = "TankInfo");
+	UPROPERTY(EditAnywhere, Category = "TankInfo");
 	float TankSpeed;
 
+	UPROPERTY(EditAnywhere, Category = "TankInfo");
+	float TurretSpeed;
+	
 	void MoveInput(const struct FInputActionValue& MoveValue);
 	void TurnInput(const struct FInputActionValue& MoveValue);
 };

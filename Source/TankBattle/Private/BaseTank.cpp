@@ -22,6 +22,7 @@ ABaseTank::ABaseTank()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	TankSpeed = 450.f;
+	TurretSpeed = 300.f;
 }
 
 void ABaseTank::BeginPlay()
@@ -47,6 +48,14 @@ void ABaseTank::BeginPlay()
 void ABaseTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		FHitResult HitResult;
+		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
+		
+		DrawDebugSphere(GetWorld(),HitResult.ImpactPoint,20.f,8,FColor::Red);
+	}
 }
 
 void ABaseTank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
