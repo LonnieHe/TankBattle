@@ -53,8 +53,10 @@ void ABaseTank::Tick(float DeltaTime)
 	{
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
-		
-		DrawDebugSphere(GetWorld(),HitResult.ImpactPoint,20.f,8,FColor::Red);
+		//
+		// DrawDebugSphere(GetWorld(),HitResult.ImpactPoint,20.f,8,FColor::Red);
+
+		RotateTurret(HitResult.ImpactPoint);
 	}
 }
 
@@ -82,6 +84,6 @@ void ABaseTank::TurnInput(const struct FInputActionValue& MoveValue)
 {
 	float InputValue = MoveValue.Get<float>();
 	FRotator DeltaRotation = FRotator::ZeroRotator;
-	DeltaRotation.Yaw = InputValue * TankSpeed * GetWorld()->GetDeltaSeconds();
+	DeltaRotation.Yaw = InputValue * TurretSpeed * GetWorld()->GetDeltaSeconds();
 	AddActorLocalRotation(DeltaRotation,true);
 }

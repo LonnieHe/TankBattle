@@ -13,5 +13,9 @@ UCLASS()
 class TANKBATTLE_API ATankBattleGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+protected:
+	virtual void BeginPlay() override;
+public:
+	TObjectPtr<class ABaseTank> Tank;
+	int32 TowerCount;
 };

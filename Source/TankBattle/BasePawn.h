@@ -26,5 +26,5 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> TurretMesh;
 
-	
+	void RotateTurret(FVector TargetLocation);
 };
