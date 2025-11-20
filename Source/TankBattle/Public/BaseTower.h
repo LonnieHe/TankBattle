@@ -28,4 +28,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float FireRange = 300.f;
+
+	UPROPERTY(EditAnywhere)
+	float FireTimer = 2.f;
+
+	void CheckFireCondition();
 };

@@ -68,6 +68,7 @@ void ABaseTank::SetupPlayerInputComponent(class UInputComponent* PlayerInputComp
 	{
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABaseTank::MoveInput);
 		EIC->BindAction(TurnAction, ETriggerEvent::Triggered, this, &ABaseTank::TurnInput);
+		EIC->BindAction(FireAction, ETriggerEvent::Started, this, &ABasePawn::Fire);
 	}
 }
 
@@ -86,4 +87,9 @@ void ABaseTank::TurnInput(const struct FInputActionValue& MoveValue)
 	FRotator DeltaRotation = FRotator::ZeroRotator;
 	DeltaRotation.Yaw = InputValue * TurretSpeed * GetWorld()->GetDeltaSeconds();
 	AddActorLocalRotation(DeltaRotation,true);
+}
+
+void ABaseTank::FireInput()
+{
+	Fire();
 }

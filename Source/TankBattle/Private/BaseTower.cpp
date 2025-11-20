@@ -7,6 +7,8 @@
 void ABaseTower::BeginPlay()
 {
 	Super::BeginPlay();
+	FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABaseTower::CheckFireCondition, 2.f, true, 2.f);
 }
 
 void ABaseTower::Tick(float DeltaTime)
@@ -18,6 +20,19 @@ void ABaseTower::Tick(float DeltaTime)
 		if (Distance <= FireRange)
 		{
 			RotateTurret(Tank->GetActorLocation());
+		}
+	}
+	
+}
+
+void ABaseTower::CheckFireCondition()
+{
+	if (Tank)
+	{
+		float Distance = FVector::Dist(Tank->GetActorLocation(), GetActorLocation());
+		if (Distance <= FireRange)
+		{
+			Fire();
 		}
 	}
 	

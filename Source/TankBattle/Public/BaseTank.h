@@ -35,6 +35,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<class UInputAction> TurnAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<class UInputAction> FireAction;
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class USpringArmComponent> SpringArmComp;
@@ -50,4 +53,5 @@ public:
 	
 	void MoveInput(const struct FInputActionValue& MoveValue);
 	void TurnInput(const struct FInputActionValue& MoveValue);
+	void FireInput();
 };

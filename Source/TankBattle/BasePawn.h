@@ -26,5 +26,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> TurretMesh;
 
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> BulletSpawnPoint;
+
 	void RotateTurret(FVector TargetLocation);
+	void Fire();
 };
