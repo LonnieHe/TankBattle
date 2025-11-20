@@ -33,4 +33,5 @@ public:
 	float FireTimer = 2.f;
 
 	void CheckFireCondition();
+	inline bool IsFireRange();
 };

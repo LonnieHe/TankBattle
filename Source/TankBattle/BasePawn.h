@@ -29,6 +29,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> BulletSpawnPoint;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABaseProjectile> BaseProjectileClass;
+
 	void RotateTurret(FVector TargetLocation);
 	void Fire();
 };

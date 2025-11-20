@@ -14,26 +14,24 @@ void ABaseTower::BeginPlay()
 void ABaseTower::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (Tank)
+	if (IsFireRange())
 	{
-		float Distance = FVector::Dist(Tank->GetActorLocation(), GetActorLocation());
-		if (Distance <= FireRange)
-		{
-			RotateTurret(Tank->GetActorLocation());
-		}
+		RotateTurret(Tank->GetActorLocation());
 	}
 	
 }
 
 void ABaseTower::CheckFireCondition()
 {
-	if (Tank)
+	if (IsFireRange())
 	{
-		float Distance = FVector::Dist(Tank->GetActorLocation(), GetActorLocation());
-		if (Distance <= FireRange)
-		{
-			Fire();
-		}
+		Fire();
 	}
-	
+}
+
+bool ABaseTower::IsFireRange()
+{
+	return (Tank
+		&& 	FVector::Dist(Tank->GetActorLocation(), GetActorLocation()) <= FireRange
+	);
 }

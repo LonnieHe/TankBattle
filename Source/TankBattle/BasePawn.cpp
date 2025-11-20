@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 
+#include "BaseProjectile.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -37,11 +38,19 @@ void ABasePawn::RotateTurret(FVector TargetLocation)
 
 void ABasePawn::Fire()
 {
-	UE_LOG(LogTemp, Display, TEXT("DoBaseFire"));
+	// UE_LOG(LogTemp, Display, TEXT("DoBaseFire"));
 	FVector FireLocation = BulletSpawnPoint->GetComponentLocation();
 	FRotator FireRotation = BulletSpawnPoint->GetComponentRotation();
-	DrawDebugSphere(GetWorld(),FireLocation,10.f,12,FColor::Red,false,3.f);
-	DrawDebugLine(GetWorld(),FireLocation,FireLocation + FireRotation.Vector() *400.f,FColor::Blue,false,3.f,0,2.f);
+	// DrawDebugSphere(GetWorld(),FireLocation,10.f,12,FColor::Red,false,3.f);
+	// DrawDebugLine(GetWorld(),FireLocation,FireLocation + FireRotation.Vector() *400.f,FColor::Blue,false,3.f,0,2.f);
+
+	ABaseProjectile* Projectile = GetWorld()->SpawnActor<ABaseProjectile>(BaseProjectileClass, FireLocation, FireRotation);
+	if (Projectile)
+	{
+		Projectile->SetOwner(this);
+		FString ShooterName = Projectile->GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("Shooter Name: %s"), *ShooterName);
+	}
 }
 
 
