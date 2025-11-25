@@ -40,8 +40,9 @@ void ABaseProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	AActor* MyOwner = GetOwner();
 	if (MyOwner && OtherActor && OtherActor != this)
 	{
+		// Apply Damage On Hited Actor
 		UGameplayStatics::ApplyDamage(OtherActor,Damage,MyOwner->GetInstigatorController(),GetOwner(),UDamageType::StaticClass());
-		UE_LOG(LogTemp, Warning, TEXT("OtherActor is %s"),*OtherActor->GetName());
+		// UE_LOG(LogTemp, Warning, TEXT("OtherActor is %s"),*OtherActor->GetName());
 	}
 	Destroy();
 }

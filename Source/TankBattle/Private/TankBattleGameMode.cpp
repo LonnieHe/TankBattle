@@ -31,3 +31,20 @@ inline void ATankBattleGameMode::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Player Tank is NULL"));
 	}
 }
+
+void ATankBattleGameMode::ActorDied(AActor* DeadActor)
+{
+	// if (ABaseTank* DeadTank = Cast<ABaseTank>(DeadActor))
+	if (DeadActor == Tank)
+	{
+		
+	}
+	else if (ABaseTower* DeadTower = Cast<ABaseTower>(DeadActor))
+	{
+		DeadTower->Destroy();
+		if (--TowerCount == 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Win"));
+		}
+	}
+}

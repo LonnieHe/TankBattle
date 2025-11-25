@@ -18,4 +18,6 @@ protected:
 public:
 	TObjectPtr<class ABaseTank> Tank;
 	int32 TowerCount;
+
+	void ActorDied(AActor* DeadActor);
 };

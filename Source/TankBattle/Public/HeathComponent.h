@@ -28,4 +28,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	float CurrentHealth;
+
+	TObjectPtr<class ATankBattleGameMode> TankBattleGameMode;
+	
+	UFUNCTION()
+	void OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 };

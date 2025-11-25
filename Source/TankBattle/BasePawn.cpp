@@ -49,7 +49,7 @@ void ABasePawn::Fire()
 	{
 		Projectile->SetOwner(this);
 		FString ShooterName = Projectile->GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("Shooter Name: %s"), *ShooterName);
+		// UE_LOG(LogTemp, Warning, TEXT("Shooter Name: %s"), *ShooterName);
 	}
 }
 
